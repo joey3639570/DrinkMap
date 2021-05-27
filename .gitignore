@@ -4,3 +4,7 @@ UI/drinkmap/**
 # SQL Server files
 *.mdf
 *.ldf
+
+# python files
+*.pyc
+*.cpython-37.pyc

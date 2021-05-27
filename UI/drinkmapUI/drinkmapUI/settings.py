@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
+import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -37,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'drinkmap.apps.DrinkmapConfig',
 ]
 
 MIDDLEWARE = [
@@ -75,12 +77,17 @@ WSGI_APPLICATION = 'drinkmapUI.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'drinkmap',
-        'USER':'account',
-        'PASSWORD': 'password',
-        'HOST': 'localhost',
-        'PORT': '8889',
+        # Using sqlite3 for now
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+        # Uncomment below for connecting with mysql
+        #'ENGINE': 'django.db.backends.mysql',
+        #'NAME': 'drinkmap',
+        #'USER':'account',
+        #'PASSWORD': 'password',
+        #'HOST': 'localhost',
+        #'PORT': '8889',
     }
 }
 
@@ -109,7 +116,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Taipei'
 
 USE_I18N = True
 
