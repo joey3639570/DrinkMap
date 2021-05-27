@@ -1,0 +1,6 @@
+# Ignore python virtual env
+UI/drinkmap/**
+
+# SQL Server files
+*.mdf
+*.ldf
