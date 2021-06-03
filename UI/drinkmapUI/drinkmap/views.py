@@ -14,7 +14,7 @@ def user(request):
     if request.method == 'POST':
         price_high = int(request.POST.get('price_high'))
         price_low = int(request.POST.get('price_low'))
-        
+        print(request.POST)
         df = dummy(price_low, price_high)
         # parsing the DataFrame in json format.
         json_records = df.to_json(orient ='records')

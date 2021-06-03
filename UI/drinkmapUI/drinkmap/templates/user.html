@@ -137,47 +137,45 @@
 		飲料地圖
 	  </h1>
 	  <h2>
-		主特徵：
+		主特徵：<br>
 	  </h2>
-	  <p>
-		<select id="selectbox1">
-		  <option value="">選擇你要的飲料類別&hellip;</option>
-		  <option value="A0001">奶茶</option>
-		  <option value="A0002">鮮奶茶</option>
-		  <option value="A0003">泰式奶茶</option>
-		  <option value="B0001">紅茶</option>
-		  <option value="C0001">綠茶</option>
-		  <option value="D0001">檸檬茶</option>
-		  <option value="E0001">高山茶</option>
-		  <option value="F0001">水果茶</option>
-		  <option value="G0001">咖啡</option>
-		  <option value="H0001">鮮奶</option>
-		  <option value="I0001">巧克力</option>
-		  <option value="J0001">其它</option>
-		</select>
-	  </p>
-	  <h2>
-		次特徵：
-	  </h2>
-	  <p>
-		<select id="selectbox2">
-		  <option value="">選擇你要的飲料類別&hellip;</option>
-		  <option value="A0001">奶茶</option>
-		  <option value="A0002">鮮奶茶</option>
-		  <option value="A0003">泰式奶茶</option>
-		  <option value="B0001">紅茶</option>
-		  <option value="C0001">綠茶</option>
-		  <option value="D0001">檸檬茶</option>
-		  <option value="E0001">高山茶</option>
-		  <option value="F0001">水果茶</option>
-		  <option value="G0001">咖啡</option>
-		  <option value="H0001">鮮奶</option>
-		  <option value="I0001">巧克力</option>
-		  <option value="J0001">其它</option>
-		</select>
-	  </p>
 	  <form id="myform" action="" method="post">
 	  {% csrf_token %} 
+		<select id="selectbox1" name="select1">
+		  <option value="">選擇你要的飲料類別&hellip;</option>
+		  <option value="A0001">奶茶</option>
+		  <option value="A0002">鮮奶茶</option>
+		  <option value="A0003">泰式奶茶</option>
+		  <option value="B0001">紅茶</option>
+		  <option value="C0001">綠茶</option>
+		  <option value="D0001">檸檬茶</option>
+		  <option value="E0001">高山茶</option>
+		  <option value="F0001">水果茶</option>
+		  <option value="G0001">咖啡</option>
+		  <option value="H0001">鮮奶</option>
+		  <option value="I0001">巧克力</option>
+		  <option value="J0001">其它</option>
+		</select>
+	  <br>
+	  <h2>
+		次特徵：<br>
+	  </h2>
+		<select id="selectbox2" name="select2">
+		  <option value="">選擇你要的飲料類別&hellip;</option>
+		  <option value="A0001">奶茶</option>
+		  <option value="A0002">鮮奶茶</option>
+		  <option value="A0003">泰式奶茶</option>
+		  <option value="B0001">紅茶</option>
+		  <option value="C0001">綠茶</option>
+		  <option value="D0001">檸檬茶</option>
+		  <option value="E0001">高山茶</option>
+		  <option value="F0001">水果茶</option>
+		  <option value="G0001">咖啡</option>
+		  <option value="H0001">鮮奶</option>
+		  <option value="I0001">巧克力</option>
+		  <option value="J0001">其它</option>
+		</select>
+	  
 		<table border="1">
 		  <tr>
 			<th>價格</th>
