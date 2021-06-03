@@ -4,7 +4,11 @@
   <head>
     {% block title %}<title>飲料地圖</title>{% endblock %}
     <meta charset="utf-8">
-	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </head>
   <style>
 	body {
@@ -124,9 +128,9 @@
     <!-- Sidebar -->
     <div class="sidenav" style="width:25%">
       <h3 class="w3-bar-item">導覽</h3>
-      <a href="#" class="w3-bar-item w3-button">首頁</a>
-      <a href="#" class="w3-bar-item w3-button">找飲料</a>
-      <a href="#" class="w3-bar-item w3-button">店家</a>
+      <a href="{% url 'homepage' %}" class="w3-bar-item w3-button">首頁</a>
+      <a href="{% url 'user' %}" class="w3-bar-item w3-button">找飲料</a>
+      <a href="{% url 'store' %}" class="w3-bar-item w3-button">店家</a>
 	</div>
 	<div style="margin-left:25%">
 	  <h1>
@@ -156,7 +160,7 @@
 		次特徵：
 	  </h2>
 	  <p>
-		<select id="selectbox1">
+		<select id="selectbox2">
 		  <option value="">選擇你要的飲料類別&hellip;</option>
 		  <option value="A0001">奶茶</option>
 		  <option value="A0002">鮮奶茶</option>
@@ -172,22 +176,52 @@
 		  <option value="J0001">其它</option>
 		</select>
 	  </p>
-	  <form name="myform" actopm="/echo/html/" method="post">
+	  <form id="myform" action="" method="post">
+	  {% csrf_token %} 
 		<table border="1">
 		  <tr>
 			<th>價格</th>
-			<td><input type="text" name="a" placeholder="input value" /> ~~ <input type="text" name="a" placeholder="input value" /></td>
+			<td><input type="text" name="price_low" placeholder="價格下限" /> ~~ <input type="text" name="price_high" placeholder="價格上限" /></td>
 		  </tr>
 		  <tr>
 			<th>找店家？</th>
-			<td><input type="text" name="a" placeholder="input value" /></td>
+			<td><input type="text" name="a" placeholder="輸入店家名稱" /></td>
 		  </tr>
 		</table>
+		<br>
 		<div class="center">
-		  <input type="button" name="b" value="檢測輸入資料" />
 		  <input type="submit" value="搜尋" />
 		</div>
+		<br>
 	  </form>
+	  <div id="results"></div>
+	  <div class="container">
+		<table class="table ">
+		<thead>
+		  <tr>
+			<th>飲料品名</th>
+			<th>價格</th>
+			<th>店家名稱</th>
+			<th>店家地址</th>
+			<th>聯絡電話</th>
+		  </tr>
+		</thead>
+		<tbody>
+			<!-- jinja2 Technique -->
+			{% if d %}  
+			{% for i in d %}
+			  <tr>
+				<td>{{i.DRINK}}</td>
+				<td>{{i.PRICE}}</td>
+				<td>{{i.STORE_NAME}}</td>
+				<td>{{i.STORE_ADDRESS}}</td>
+				<td>{{i.STORE_PHONE}}</td>
+			  </tr>
+			{% endfor %}
+			{% endif %}
+			</tbody>
+		  </table>
+	  </div>
 	</div>
   </body>
 
@@ -267,5 +301,58 @@
 	  let fileInputElementValue = fileInputElement.value;
 	  
 	  textInputElement.value = fileInputElementValue;
+	});
+	
+	// Get data from form
+	var formEl = document.getElementById('myform');
+
+	formEl.addEventListener('submit', function(event) {
+	  // 1. Setup the request
+	  // ================================
+	  // 1.1 Headers
+	  var headers = new Headers();
+	  // Tell the server we want JSON back
+	  headers.set('Accept', 'application/json');
+
+	  // 1.2 Form Data
+	  // We need to properly format the submitted fields.
+	  // Here we will use the same format the browser submits POST forms.
+	  // You could use a different format, depending on your server, such
+	  // as JSON or XML.
+	  var formData = new FormData();
+	  for (var i = 0; i < formEl.length; ++i) {
+		formData.append(formEl[i].name, formEl[i].value);
+	  }
+	  
+	  // This is for the purpose of this demo using jsFiddle AJAX Request endpoint
+	  formData.append('json', JSON.stringify({example: 'return value'}));
+
+	  // 2. Make the request
+	  // ================================
+	  var url = '/echo/json/';
+	  var fetchOptions = {
+		method: 'POST',
+		headers,
+		body: formData
+	  };
+	  
+	  var responsePromise = fetch(url, fetchOptions);
+	  
+	  // 3. Use the response
+	  // ================================
+	  responsePromise
+		// 3.1 Convert the response into JSON-JS object.
+		.then(function(response) {
+		  return response.json();
+		})
+		// 3.2 Do something with the JSON data
+		.then(function(jsonData) {
+			console.log(jsonData);
+		  document.getElementById('results').innerText =
+			JSON.stringify(jsonData);
+		});
+	  
+
+	  event.preventDefault();
 	});
 </script>

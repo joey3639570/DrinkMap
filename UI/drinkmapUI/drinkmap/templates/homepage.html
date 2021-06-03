@@ -4,7 +4,11 @@
   <head>
     {% block title %}<title>飲料地圖</title>{% endblock %}
     <meta charset="utf-8">
-	
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
   </head>
   <style>
 	body {
@@ -124,11 +128,12 @@
     <!-- Sidebar -->
     <div class="sidenav" style="width:25%">
       <h3 class="w3-bar-item">導覽</h3>
-      <a href="#" class="w3-bar-item w3-button">首頁</a>
-      <a href="#" class="w3-bar-item w3-button">找飲料</a>
-      <a href="#" class="w3-bar-item w3-button">店家</a>
-
+      <a href="{% url 'homepage' %}" class="w3-bar-item w3-button">首頁</a>
+      <a href="{% url 'user' %}" class="w3-bar-item w3-button">找飲料</a>
+      <a href="{% url 'store' %}" class="w3-bar-item w3-button">店家</a>
+	</div>
 	<div style="margin-left:25%">
+	
 	  <h1>
 		飲料地圖
 	  </h1>
