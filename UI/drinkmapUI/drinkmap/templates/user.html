@@ -192,9 +192,9 @@
 		<table class="table ">
 		<thead>
 		  <tr>
+			<th>店家名稱</th>
 			<th>飲料品名</th>
 			<th>價格</th>
-			<th>店家名稱</th>
 			<th>店家地址</th>
 			<th>聯絡電話</th>
 		  </tr>
@@ -204,9 +204,9 @@
 			{% if d %}  
 			{% for i in d %}
 			  <tr>
-				<td>{{i.DRINK}}</td>
-				<td>{{i.PRICE}}</td>
-				<td>{{i.STORE_NAME}}</td>
+				<td>{{i.shopname}}</td>
+				<td>{{i.drinkname}}</td>
+				<td>{{i.cost}}</td>
 				<td>{{i.STORE_ADDRESS}}</td>
 				<td>{{i.STORE_PHONE}}</td>
 			  </tr>
