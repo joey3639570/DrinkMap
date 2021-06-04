@@ -8,3 +8,5 @@ UI/drinkmap/**
 # python files
 *.pyc
 *.cpython-37.pyc
+
+mydatabase.db

@@ -139,24 +139,23 @@
 	  <h2>
 		新店家？
 	  </h2>
-	  <form name="myform" actopm="/echo/html/" method="post">
+	  <form name="new_store_form" action="" method="post">
 		<table border="1" width="100%">
 		  <tr>
 			<th>店家名稱</th>
-			<td><input type="text" name="a" placeholder="input value" /></td>
+			<td><input type="text" name="store_name" placeholder="input value" /></td>
 		  </tr>
 		  <tr>
 			<th>店家地址</th>
-			<td><input type="text" name="a" placeholder="input value" /></td>
+			<td><input type="text" name="store_address" placeholder="input value" /></td>
 		  </tr>
 		  <tr>
 			<th>聯絡電話</th>
-			<td><input type="text" name="a" placeholder="input value" /></td>
+			<td><input type="text" name="store_phone" placeholder="input value" /></td>
 		  </tr>
 		</table>
 		<div class="center">
-		  <input type="button" name="b" value="檢測輸入資料" />
-		  <input type="submit" value="輸入資料庫" />
+		  <input type="submit" name="new_store_submit" value="輸入資料庫" />
 		</div>
 	  </form>
 	  <h2>
@@ -171,20 +170,19 @@
 	  <h2>
 		逐條加入：
 	  </h2>
-	  <form name="myform" actopm="/echo/html/" method="post">
+	  <form name="add_drink_form" action="" method="post">
 		<table border="1" width="100%">
 		  <tr>
 			<th>飲料品名</th>
-			<td><input type="text" name="a" placeholder="輸入飲料品名" /></td>
+			<td><input type="text" name="drink" placeholder="輸入飲料品名" /></td>
 		  </tr>
 		  <tr>
 			<th>價格(以大杯為準)</th>
-			<td><input type="text" name="a" placeholder="輸入價格" /></td>
+			<td><input type="text" name="price" placeholder="輸入價格" /></td>
 		  </tr>
 		</table>
 		<div class="center">
-		  <input type="button" name="b" value="檢測輸入資料" />
-		  <input type="submit" value="輸入資料庫" />
+		  <input type="submit" name="new_drink_submit" value="輸入資料庫" />
 		</div>
 	  </form>
 	</div>
