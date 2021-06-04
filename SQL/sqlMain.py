@@ -1,4 +1,5 @@
 from sqlHandler import SQLHandler
+import pandas as pd
 
 class SQLMain:
     def __init__(self):
@@ -20,21 +21,45 @@ class SQLMain:
     def SetShop(self, Shop = None):
         self.Shop = Shop
         
-    def Query(self):
-        sql = f""" 
-        select ShopName, DrinkName, Cost
-        from (DrinkClass NATURAL JOIN Drink) NATURAL JOIN Shop
-        where Cost > {self.Min} AND Cost < {self.Max}
-        {f'AND ClassName = "{self.className}"' if self.className != None else ""}{f'AND ShopName = "{self.Shop}"' if self.Shop != None else ""}
+    def Query(self, key=dict):
         """
-        print(sql)
-        result = self.s.SQL(sql)
-        for res in result:
-            line = ", ".join([str(s) for s in res])
-            print(line)
-            
+        key 有 主特徵 次特徵 價格下限 價格上限 店家 
+        名字上是
+        {'select1','select2','price_low','price_high','store_name'}
+        型態上是
+        {'string','string','int','int','string'}
+        """
+        #region unpack
+        
+        #define select1 = classname
+        self.SetClass(key['select1'])
+        self.drinkName = key['select2']
+        self.SetPriceRange(key['price_low'], key['price_high'])
+        self.SetShop(key['store_name'])
+        #endregion
+        
+        sql = f"""
+select ShopName, DrinkName, Cost
+from (DrinkClass NATURAL JOIN Drink) NATURAL JOIN Shop
+where Cost > {self.Min} AND Cost < {self.Max}
+{f'AND ClassName = "{self.className}"' if self.className != None else ""}
+{f'AND DrinkName like "%{self.drinkName}%"' if self.drinkName != None else ""}
+{f'AND ShopName = "{self.Shop}"' if self.Shop != None else ""}
+        """
+        print(f"\nSQL:{sql}")
+        #result = self.s.SQL(sql)
+        df = pd.read_sql_query(sql, self.s.con)
+        print(f'pd.dataframe:\n{df}')
+        return df
+        
 if __name__ == "__main__":
     sm = SQLMain()
-    sm.SetClass("鮮奶茶")
-    sm.SetShop()
-    sm.Query()
+    
+    key = {}
+    key['select1'] = '水果茶'
+    key['select2'] = '檸檬'
+    key['price_low'] = 40
+    key['price_high'] = 70
+    key['store_name'] = '大苑子'
+    
+    df = sm.Query(key)
