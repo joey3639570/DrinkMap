@@ -1,11 +1,12 @@
 import sqlite3
+import os
 
 class SQLHandler:
     def __init__(self):
         super().__init__()
         
     def Start(self):
-        self.con = sqlite3.connect('./mydatabase.db')
+        self.con = sqlite3.connect(f'{os.path.dirname(__file__)}/mydatabase.db')
 
         self.cursorObj = self.con.cursor()
 
