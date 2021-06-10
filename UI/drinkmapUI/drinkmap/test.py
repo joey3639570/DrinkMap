@@ -6,3 +6,16 @@ def dummy(low,high):
     df = pd.DataFrame(data=d)
     return df
 
+def dummy_storeq(number):
+    d = {'drinkname': ['black_tea','green_tea'], 'drinktype': ['a01','a02'], 'cost': [number, 5]}
+    df = pd.DataFrame(data=d)
+    return df
+
+def dummy_drink_revise(input_dict):
+    d = input_dict
+    #print(d)
+    df = pd.DataFrame(list(d.items()))
+    return df
+    
+def dummy_store_list():
+    return [1,2,3,4,5]

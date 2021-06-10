@@ -139,52 +139,99 @@
 	  <h2>
 		新店家？
 	  </h2>
-	  <form name="new_store_form" action="" method="post">
-		<table border="1" width="100%">
-		  <tr>
-			<th>店家名稱</th>
-			<td><input type="text" name="store_name" placeholder="input value" /></td>
-		  </tr>
-		  <tr>
-			<th>店家地址</th>
-			<td><input type="text" name="store_address" placeholder="input value" /></td>
-		  </tr>
-		  <tr>
-			<th>聯絡電話</th>
-			<td><input type="text" name="store_phone" placeholder="input value" /></td>
-		  </tr>
-		</table>
+	  <form id="new_drink" name="new_drink" action="" method="post">
+		  {% csrf_token %} 
+		  <table border="1">
+			  <tr>
+				<th>店家名稱</th>
+				<td><input type="text" name="storename" placeholder="飲料品名" /></td>
+			  </tr>
+			  <tr>
+				<th>營業時間</th>
+				<td><input type="text" name="storetime1" placeholder="00:00" /> ~~ <input type="text" name="storetime2" placeholder="12:00" /></td>
+			  </tr>
+			  <tr>
+				<th>連絡電話</th>
+				<td><input type="text" name="storephone" placeholder="連絡電話" /></td>
+			  </tr>
+			  <tr>
+				<th>店家地址</th>
+				<td><input type="text" name="storeaddress" placeholder="店家地址" /></td>
+			  </tr>
+			</table>
+			<br>
+			<div class="center">
+			  <input type="submit" value="輸入" />
+			</div>
+		  </form>
+		  <br>
+	<p>
+	  <h2>
+		選擇商店編號
+	  </h2>
+	  <form id="store_query" name="store_query" action="" method="post">
+	  {% csrf_token %}
+		<select name="select_store">
+			  <option value="">選擇商店編號&hellip;</option>
+		  {% for store_id in store_list %}
+			  <option value="{{ store_id }}">{{ store_id }}</option>
+		  {% endfor %}
+		</select>
 		<div class="center">
-		  <input type="submit" name="new_store_submit" value="輸入資料庫" />
+		  <input type="submit" value="輸入" />
 		</div>
 	  </form>
-	  <h2>
-		上傳菜單 Excel：
-	  </h2>
-	  <div class="ux-a-file-upload">
-		<input type="file" name="file name" class="ux-js-a-file-upload__input-file ux-a-file-upload__input-file" />
-		<input type="text" class="ux-js-a-file-upload__input-text ux-a-file-upload__input-text" />
-		<button class="ux-a-file-button">選擇檔案</button>
-	  </div>
-
-	  <h2>
-		逐條加入：
-	  </h2>
-	  <form name="add_drink_form" action="" method="post">
-		<table border="1" width="100%">
+	  <br>
+	  <div class="container">
+		<table class="table ">
+		<thead>
 		  <tr>
 			<th>飲料品名</th>
-			<td><input type="text" name="drink" placeholder="輸入飲料品名" /></td>
+			<th>飲料類別</th>
+			<th>價格</th>
 		  </tr>
-		  <tr>
-			<th>價格(以大杯為準)</th>
-			<td><input type="text" name="price" placeholder="輸入價格" /></td>
-		  </tr>
-		</table>
-		<div class="center">
-		  <input type="submit" name="new_drink_submit" value="輸入資料庫" />
-		</div>
-	  </form>
+		</thead>
+		<tbody>
+			<!-- jinja2 Technique -->
+			{% if d %}  
+			{% for i in d %}
+			  <tr>
+				<td>{{i.drinkname}}</td>
+				<td>{{i.drinktype}}</td>
+				<td>{{i.cost}}</td>
+			  </tr>
+			{% endfor %}
+			{% endif %}
+			</tbody>
+		  </table>
+	  </div>
+	  <div>
+	</p>
+		  <h2>
+		  修改飲料資料:
+		  </h2>
+		  <form id="new_drink" name="new_drink" action="" method="post">
+		  {% csrf_token %} 
+		  <table border="1">
+			  <tr>
+				<th>飲料品名</th>
+				<td><input type="text" name="drinkname" placeholder="飲料品名" /></td>
+			  </tr>
+			  <tr>
+				<th>飲料類別</th>
+				<td><input type="text" name="drinktype" placeholder="飲料類別" /></td>
+			  </tr>
+			  <tr>
+				<th>價格</th>
+				<td><input type="text" name="cost" placeholder="價格" /></td>
+			  </tr>
+			</table>
+			<br>
+			<div class="center">
+			  <input type="submit" value="搜尋" />
+			</div>
+		  </form>
+	  </div>
 	</div>
 
   </body>
