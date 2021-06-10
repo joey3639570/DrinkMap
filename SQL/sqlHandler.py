@@ -18,7 +18,13 @@ class SQLHandler:
             if commit:
                 self.con.commit()
             return result
-                
+            
+    def Commit(self):
+        self.con.commit()
+    
+    def Abort(self):
+        self.con.rollback()
+        
     def Close(self):
         self.con.close()
         

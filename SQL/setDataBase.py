@@ -4,16 +4,19 @@ s = SQLHandler()
 
 s.Start()
 line = ["""
-drop table if exists Shop;
-""", """CREATE TABLE Shop (
-	shopname text,
-	shopid int
-);
-""", """INSERT INTO Shop VALUES ('拉CHA茶',1);
-""", """INSERT INTO Shop VALUES ('Mr.WISH',2);
-""", """INSERT INTO Shop VALUES ('麻古茶坊',3);
-""", """INSERT INTO Shop VALUES ('鮮茶道',4);
-""", """INSERT INTO Shop VALUES ('大苑子',5);
+DROP TABLE IF EXISTS Shop;""","""
+CREATE TABLE Shop(
+   ShopName VARCHAR(7) NOT NULL
+  ,ShopID   INTEGER  NOT NULL PRIMARY KEY AUTOINCREMENT
+  ,Time     VARCHAR(11)
+  ,Tel      VARCHAR(10)
+  ,Address  VARCHAR(14)
+);""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('拉CHA茶',1,NULL,NULL,NULL);""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('Mr.WISH',2,'10:30-22:30','06-2088832','台南市東區育樂街52號');""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('麻古茶坊',3,'08:00-22:00','06-2002221','台南市東區大學路西段1號');""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('鮮茶道',4,'09:20-22:30','06-2388877','台南市東區育樂街156-2號');""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('大苑子',5,'10:00-22:30','06-2082238','台南市東區勝利路149號');
 """, """
 drop table if exists DrinkClass;
 """, """CREATE TABLE DrinkClass (
@@ -257,7 +260,74 @@ drop table if exists Drink;
 """, """INSERT INTO Drink VALUES (5,'奶茶','A0001',35);
 """, """INSERT INTO Drink VALUES (5,'珍珠奶茶','A0001',35);
 """, """INSERT INTO Drink VALUES (5,'仙草凍奶茶','A0001',35);
-"""]
+""",
+"""DROP TABLE IF EXISTS ShopItems;""","""
+CREATE TABLE ShopItems(
+   ShopID INTEGER  NOT NULL
+  ,ItemID VARCHAR(5) NOT NULL
+);""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (2,'aa006');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (2,'aa007');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (2,'aa008');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (2,'aa009');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (2,'aa010');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (2,'aa005');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa007');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa019');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa002');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa020');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa021');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa023');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa022');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa017');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (3,'aa013');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa001');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa011');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa012');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa013');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa007');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa014');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa003');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa002');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa015');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa016');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa017');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (4,'aa018');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (5,'aa001');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (5,'aa002');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (5,'aa003');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (5,'aa004');""","""
+INSERT INTO ShopItems(ShopID,ItemID) VALUES (5,'aa005');""","""
+DROP TABLE IF EXISTS Items;""","""
+CREATE TABLE Items(
+   ItemName VARCHAR(4) NOT NULL
+  ,ItemID   VARCHAR(5) NOT NULL
+);""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('珍珠','aa001');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('仙草凍','aa002');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('蘆薈','aa003');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('脆纖果','aa004');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('愛玉','aa005');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('白玉珍珠','aa006');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('椰果','aa007');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('羅勒子','aa008');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('黑糖珍珠','aa009');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('燕麥','aa010');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('QQ','aa011');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('荔枝QQ','aa012');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('寒天','aa013');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('紅豆','aa014');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('小紫蘇','aa015');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('統一布丁','aa016');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('養樂多','aa017');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('密鳳梨','aa018');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('咖啡凍','aa019');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('波霸','aa020');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('雙Q果','aa021');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('蜂蜜','aa022');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('布丁','aa023');""","""
+"""
+]
 for l in line:
     s.SQL(l, True)
 s.Close()
