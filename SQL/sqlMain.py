@@ -66,6 +66,25 @@ class SQLMain:
         
         return list(zip(l[0], l[1]))
     
+    def GetDrinkList(self,
+                 output = lambda x:print(x)):
+        """
+        列出飲料類別列表:
+        無須input，執行便會回傳
+        飲料類別 的list
+        e.g.[奶茶,鮮奶茶,泰式奶茶,紅茶,綠茶]
+        """
+        
+        sql = f"""
+        SELECT classname
+        FROM DrinkClass;
+        """
+        output(f"\nSQL:{sql}")
+        df = pd.read_sql_query(sql, self.s.con)
+        ret = [t[0] for t in df.values.tolist()]
+        output(ret)
+        return ret
+    
     def GetDrink(self, id,
                  output = lambda x:print(x)):
         sql = f"""
@@ -76,6 +95,26 @@ class SQLMain:
         output(f"\nSQL:{sql}")
         df = pd.read_sql_query(sql, self.s.con)
         output(df)
+        return df
+    
+    def GetItemList(self,
+                 output = lambda x:print(x)):
+        """
+        列出加料類別列表:
+        無須input，執行便會回傳
+        加料類別 的list
+        e.g. [珍珠,仙草凍,蘆薈,脆纖果,愛玉]
+        """
+        
+        sql = f"""
+        SELECT ItemName
+        FROM Items;
+        """
+        output(f"\nSQL:{sql}")
+        df = pd.read_sql_query(sql, self.s.con)
+        ret = [t[0] for t in df.values.tolist()]
+        output(ret)
+        return ret
     
     def SetPriceRange(self, Min = 0, Max = 999):
         if Min != None and Min != '':
@@ -122,7 +161,7 @@ where Cost > {self.Min} AND Cost < {self.Max}
         
 if __name__ == "__main__":
     sm = SQLMain()
-    
+    """
     key = {}
     key['select1'] = '水果茶'
     key['select2'] = '檸檬'
@@ -131,6 +170,7 @@ if __name__ == "__main__":
     key['price_low'] = None
     key['price_high'] = None
     df = sm.Query(key)
+    """
     
     """
     key = {'storename':"test",'storetime1':"08:00",'storetime2':"10:00",'storephone':"0123456789","storeaddress":"home"}
@@ -141,4 +181,8 @@ if __name__ == "__main__":
                     
     # print(sm.GetShopList(output = lambda x:print(x))) # [('拉CHA茶', 1), ('Mr.WISH', 2), ('麻古茶坊', 3), ('鮮茶道', 4), ('大苑子', 5)]
     
-    # sm.GetDrink(5, output = lambda x:print(x))
+    #sm.GetDrink(5, output = lambda x:print(x))
+    
+    # sm.GetDrinkList() # ['奶茶', '鮮奶茶', '泰式奶茶', '紅茶', '綠茶', '檸檬茶', '高山茶', '水果茶', '咖啡', '鮮奶', '巧克力', '其它'] 
+    
+    sm.GetItemList() # ['珍珠', '仙草凍', '蘆薈', '脆纖果', '愛玉', '白玉珍珠', '椰果', '羅勒子', '黑糖珍珠', '燕麥', 'QQ', '荔枝QQ', '寒天', '紅豆', '小紫蘇', '統一布丁', '養樂多', '密鳳梨', '咖啡凍', '波霸', '雙Q果', '蜂蜜', '布丁']
