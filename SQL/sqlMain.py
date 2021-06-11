@@ -78,8 +78,10 @@ class SQLMain:
         output(df)
     
     def SetPriceRange(self, Min = 0, Max = 999):
-        self.Min = Min 
-        self.Max = Max
+        if Min != None and Min != '':
+            self.Min = Min 
+        if Max != None and Max != '':
+            self.Max = Max
     
     def SetClass(self, className = None):
         self.className = className
@@ -98,10 +100,10 @@ class SQLMain:
         #region unpack
         
         #define select1 = classname
-        self.SetClass(key['select1'])
-        self.drinkName = key['select2']
-        self.SetPriceRange(key['price_low'], key['price_high'])
-        self.SetShop(key['store_name'])
+        self.SetClass(key.setdefault('select1', None))
+        self.drinkName = key.setdefault('select2', None)
+        self.SetPriceRange(key.setdefault('price_low', None), key.setdefault('price_high', None))
+        self.SetShop(key.setdefault('store_name', None))
         #endregion
         
         sql = f"""
@@ -120,15 +122,16 @@ where Cost > {self.Min} AND Cost < {self.Max}
         
 if __name__ == "__main__":
     sm = SQLMain()
-    """
+    
     key = {}
     key['select1'] = '水果茶'
     key['select2'] = '檸檬'
-    key['price_low'] = 40
-    key['price_high'] = 70
     key['store_name'] = '大苑子'
+    
+    key['price_low'] = None
+    key['price_high'] = None
     df = sm.Query(key)
-    """
+    
     """
     key = {'storename':"test",'storetime1':"08:00",'storetime2':"10:00",'storephone':"0123456789","storeaddress":"home"}
     df = sm.AddShop(key, 
