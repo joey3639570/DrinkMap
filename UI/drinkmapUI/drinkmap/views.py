@@ -66,8 +66,8 @@ def user(request):
     context = {}
     input_dict = {}
     sm = sqlMain.SQLMain()
-    context['drinktype_list'] = dummy_drinktype_list()
-    context['topping_list'] = dummy_topping_list()
+    context['drinktype_list'] = sm.GetDrinkList()
+    context['topping_list'] = sm.GetItemList()
     if request.method == 'POST':
         price_high = None
         price_low = None
