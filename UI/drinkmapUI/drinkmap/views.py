@@ -85,8 +85,10 @@ def user(request):
             price_low = request.POST.get('price_low')
         if 'store_name' in request.POST:
             store_name = request.POST.get('store_name')
+            if store_name == '':
+                store_name = None
         
-        print(request.POST)
+        print("HEREEE",request.POST)
         input_dict = {'select1':select1,'select2':select2,'price_low':price_low,'price_high':price_high,'store_name':store_name}
         df = sm.Query(input_dict)
         # parsing the DataFrame in json format.
