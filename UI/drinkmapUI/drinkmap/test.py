@@ -19,3 +19,9 @@ def dummy_drink_revise(input_dict):
     
 def dummy_store_list():
     return [1,2,3,4,5]
+    
+def dummy_drinktype_list():
+    return ["奶茶","鮮奶茶","泰式奶茶","紅茶","綠茶","檸檬茶","高山茶","水果茶"]
+
+def dummy_topping_list():
+    return ["檸檬","珍珠","波霸","椰果","咖啡凍","寒天","芋圓","其它"]

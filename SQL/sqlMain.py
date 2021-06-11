@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from sqlHandler import SQLHandler
 import pandas as pd
 

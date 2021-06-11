@@ -137,38 +137,25 @@
 		飲料地圖
 	  </h1>
 	  <h2>
-		主特徵：<br>
+		選擇飲料類別：<br>
 	  </h2>
 	  <form id="myform" action="" method="post">
 	  {% csrf_token %} 
 		<select id="selectbox1" name="select1">
-		  <option value="">選擇你要的飲料類別&hellip;</option>
-		  <option value="奶茶">奶茶</option>
-		  <option value="鮮奶茶">鮮奶茶</option>
-		  <option value="泰式奶茶">泰式奶茶</option>
-		  <option value="紅茶">紅茶</option>
-		  <option value="綠茶">綠茶</option>
-		  <option value="高山茶">高山茶</option>
-		  <option value="水果茶">水果茶</option>
-		  <option value="咖啡">咖啡</option>
-		  <option value="鮮奶">鮮奶</option>
-		  <option value="巧克力">巧克力</option>
-		  <option value="其它">其它</option>
+		  <option value="n">選擇你要的飲料類別&hellip;</option>
+		  {% for drinktype in drinktype_list %}
+			  <option value="{{ drinktype }}">{{ drinktype }}</option>
+		  {% endfor %}
 		</select>
 	  <br>
 	  <h2>
-		次特徵：<br>
+		選擇加料：<br>
 	  </h2>
 		<select id="selectbox2" name="select2">
-		  <option value="">選擇你要的飲料類別&hellip;</option>
-		  <option value="檸檬">檸檬</option>
-		  <option value="珍珠">珍珠</option>
-		  <option value="波霸">波霸</option>
-		  <option value="椰果">椰果</option>
-		  <option value="咖啡凍">咖啡凍</option>
-		  <option value="寒天">寒天</option>
-		  <option value="芋圓">芋圓</option>
-		  <option value="其它">其它</option>
+		  <option value="n">選擇你要的加料類別&hellip;</option>
+		  {% for topping in topping_list %}
+			  <option value="{{ topping }}">{{ topping }}</option>
+		  {% endfor %}
 		</select>
 	  
 		<table border="1">

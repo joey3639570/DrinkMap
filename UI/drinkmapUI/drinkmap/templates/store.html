@@ -144,7 +144,7 @@
 		  <table border="1">
 			  <tr>
 				<th>店家名稱</th>
-				<td><input type="text" name="storename" placeholder="飲料品名" /></td>
+				<td><input type="text" name="storename" placeholder="店家名稱" /></td>
 			  </tr>
 			  <tr>
 				<th>營業時間</th>
@@ -167,14 +167,14 @@
 		  <br>
 	<p>
 	  <h2>
-		選擇商店編號
+		選擇商店
 	  </h2>
 	  <form id="store_query" name="store_query" action="" method="post">
 	  {% csrf_token %}
 		<select name="select_store">
-			  <option value="">選擇商店編號&hellip;</option>
-		  {% for store_id in store_list %}
-			  <option value="{{ store_id }}">{{ store_id }}</option>
+			  <option value="">選擇商店&hellip;</option>
+		  {% for store in store_list %}
+			  <option value="{{ store.1 }}">{{ store.0 }}</option>
 		  {% endfor %}
 		</select>
 		<div class="center">
