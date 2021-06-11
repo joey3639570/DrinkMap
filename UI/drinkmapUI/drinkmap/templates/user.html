@@ -149,7 +149,7 @@
 		</select>
 	  <br>
 	  <h2>
-		選擇加料：<br>
+		<br>選擇加料：<br>
 	  </h2>
 		<select id="selectbox2" name="select2">
 		  <option value="n">選擇你要的加料類別&hellip;</option>
@@ -157,7 +157,7 @@
 			  <option value="{{ topping }}">{{ topping }}</option>
 		  {% endfor %}
 		</select>
-	  
+	  <p>
 		<table border="1">
 		  <tr>
 			<th>價格</th>
@@ -172,9 +172,12 @@
 		<div class="center">
 		  <input type="submit" value="搜尋" />
 		</div>
+	  </p>
 		<br>
 	  </form>
-	  <div id="results"></div>
+	  <h2>
+		<br>查詢結果：<br>
+	  </h2>
 	  <div class="container">
 		<table class="table ">
 		<thead>
@@ -202,21 +205,26 @@
 			</tbody>
 		  </table>
 	  </div>
+	  {% if shop %}
+	  <h3>
+		<br>您選擇的加料還有以下店家有...<br>
+	  </h3>
+	  {% endif %}
 	  <div class="container">
 		<table class="table ">
 		<tbody>
 			<!-- jinja2 Technique -->
-			{% if d %}  
-			{% for i in d %}
-			  <thead>
+			{% if shop %}  
+			<thead>
 			  <tr>
 				<th>店家名稱</th>
 				<th>加料品名</th>
 			  </tr>
-			  </thead>
+			</thead>
+			{% for i in shop %} 
 			  <tr>
-				<td>{{i.ShopName}}</td>
-				<td>{{i.toppingname}}</td>
+				<td>{{i}}</td>
+				<td>{{topping}}</td>
 			  </tr>
 			{% endfor %}
 			{% endif %}

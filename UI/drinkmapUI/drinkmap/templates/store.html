@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
@@ -184,21 +185,32 @@
 	  <br>
 	  <div class="container">
 		<table class="table ">
-		<thead>
-		  <tr>
-			<th>飲料品名</th>
-			<th>飲料類別</th>
-			<th>價格</th>
-		  </tr>
-		</thead>
+		
 		<tbody>
 			<!-- jinja2 Technique -->
-			{% if d %}  
+			{% if d %} 
+			<thead>
+			  <tr>
+				<th>飲料品名</th>
+				<th>飲料類別</th>
+				<th>價格</th>
+			  </tr>
+			</thead>
 			{% for i in d %}
 			  <tr>
 				<td>{{i.drinkname}}</td>
-				<td>{{i.drinktype}}</td>
+				<td>{{i.classname}}</td>
 				<td>{{i.cost}}</td>
+				<td>
+				<ul class="list-inline m-0">
+				  <li class="list-inline-item">
+                    <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit " ></i></button>
+                  </li>
+                  <li class="list-inline-item">
+                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                  </li>
+				</ul>
+				</td>
 			  </tr>
 			{% endfor %}
 			{% endif %}
@@ -313,4 +325,8 @@
 	  
 	  textInputElement.value = fileInputElementValue;
 	});
+	$(function () {
+    $('[data-toggle="tooltip"]').tooltip();
+	});
+
 </script>

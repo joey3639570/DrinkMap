@@ -79,6 +79,10 @@ def user(request):
             select1 = None
         if select2 == 'n':
             select2 = None
+        else:
+            shop_list = sm.GetShopListByItem(select2)
+            context['topping'] = select2
+            context['shop'] = shop_list
         if 'price_high' in request.POST:
             price_high = request.POST.get('price_high')
         if 'price_low' in request.POST:
@@ -88,8 +92,8 @@ def user(request):
             if store_name == '':
                 store_name = None
         
-        print("HEREEE",request.POST)
         input_dict = {'select1':select1,'select2':select2,'price_low':price_low,'price_high':price_high,'store_name':store_name}
+        
         df = sm.Query(input_dict)
         # parsing the DataFrame in json format.
         json_records = df.to_json(orient ='records')
