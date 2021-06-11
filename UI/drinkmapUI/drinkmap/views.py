@@ -31,7 +31,7 @@ def store(request):
             json_records = df.to_json(orient ='records')
             data = []
             data = json.loads(json_records)
-            context = {'d': data}
+            context['d'] = data
             
         elif 'drinkname' in request.POST:
             drink_name = request.POST.get('drinkname')

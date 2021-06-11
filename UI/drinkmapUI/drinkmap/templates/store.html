@@ -124,6 +124,38 @@
 	  opacity: 0;
 	  cursor: pointer;
 	}
+	
+	/* Pop up Form */
+	#overlay {
+	  position: fixed;
+	  height: 100%;
+	  width: 100%;
+	  top: 0;
+	  right: 0;
+	  bottom: 0;
+	  left: 0;
+	  background: rgba(0,0,0,0.8);
+	  display: none;
+	}
+
+	#popup {
+	  max-width: 600px;
+	  width: 80%;
+	  max-height: 300px;
+	  height: 80%;
+	  padding: 20px;
+	  position: relative;
+	  background: #fff;
+	  margin: 20px auto;
+	}
+
+	#close {
+	  position: absolute;
+	  top: 10px;
+	  right: 10px;
+	  cursor: pointer;
+	  color: #000;
+	}
   </style>
   <body>
     <!-- Sidebar -->
@@ -137,35 +169,6 @@
 	  <h1>
 		飲料地圖
 	  </h1>
-	  <h2>
-		新店家？
-	  </h2>
-	  <form id="new_drink" name="new_drink" action="" method="post">
-		  {% csrf_token %} 
-		  <table border="1">
-			  <tr>
-				<th>店家名稱</th>
-				<td><input type="text" name="storename" placeholder="店家名稱" /></td>
-			  </tr>
-			  <tr>
-				<th>營業時間</th>
-				<td><input type="text" name="storetime1" placeholder="00:00" /> ~~ <input type="text" name="storetime2" placeholder="12:00" /></td>
-			  </tr>
-			  <tr>
-				<th>連絡電話</th>
-				<td><input type="text" name="storephone" placeholder="連絡電話" /></td>
-			  </tr>
-			  <tr>
-				<th>店家地址</th>
-				<td><input type="text" name="storeaddress" placeholder="店家地址" /></td>
-			  </tr>
-			</table>
-			<br>
-			<div class="center">
-			  <input type="submit" value="輸入" />
-			</div>
-		  </form>
-		  <br>
 	<p>
 	  <h2>
 		選擇商店
@@ -213,14 +216,54 @@
 				</td>
 			  </tr>
 			{% endfor %}
+			
 			{% endif %}
 			</tbody>
 		  </table>
+		  {% if d %}
+		    <b>增加飲料：  </b><button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Add"><i class="fa fa-plus-square"></i></button>
+		  {% endif %}
 	  </div>
 	  <div>
 	</p>
+	<h2>
+		新店家？
+	  </h2>
+	    <button id="trigger">新增店家</button>
+		<div id="overlay">
+		  <div id="popup">
+			<div id="close">X</div>
+			  <form id="new_drink" name="new_drink" action="" method="post">
+			  {% csrf_token %} 
+			  <table border="1">
+				  <tr>
+					<th>店家名稱</th>
+					<td><input type="text" name="storename" placeholder="店家名稱" /></td>
+				  </tr>
+				  <tr>
+					<th>營業時間</th>
+					<td><input type="text" name="storetime1" placeholder="00:00" /> ~~ <input type="text" name="storetime2" placeholder="12:00" /></td>
+				  </tr>
+				  <tr>
+					<th>連絡電話</th>
+					<td><input type="text" name="storephone" placeholder="連絡電話" /></td>
+				  </tr>
+				  <tr>
+					<th>店家地址</th>
+					<td><input type="text" name="storeaddress" placeholder="店家地址" /></td>
+				  </tr>
+				</table>
+				<br>
+				<div class="center">
+				  <input type="submit" value="輸入" />
+				</div>
+			  </form>
+		  </div>
+		</div>
+	  
+		  <br>
 		  <h2>
-		  修改飲料資料:
+		  <br>修改飲料資料:</br>
 		  </h2>
 		  <form id="new_drink" name="new_drink" action="" method="post">
 		  {% csrf_token %} 
@@ -250,12 +293,12 @@
 
 </html>
 <script>
-	// Iterate over each select element
+// Iterate over each select element
 	$('select').each(function() {
 
 	  // Cache the number of options
 	  var $this = $(this),
-		numberOfOptions = $(this).children('option').length;
+	    numberOfOptions = $(this).children('option').length;
 
 	  // Hides the select element
 	  $this.addClass('s-hidden');
@@ -274,15 +317,15 @@
 
 	  // Insert an unordered list after the styled div and also cache the list
 	  var $list = $('<ul />', {
-		'class': 'options'
+	    'class': 'options'
 	  }).insertAfter($styledSelect);
 
 	  // Insert a list item into the unordered list for each select option
 	  for (var i = 0; i < numberOfOptions; i++) {
-		$('<li />', {
-		  text: $this.children('option').eq(i).text(),
-		  rel: $this.children('option').eq(i).val()
-		}).appendTo($list);
+	    $('<li />', {
+	      text: $this.children('option').eq(i).text(),
+	      rel: $this.children('option').eq(i).val()
+	    }).appendTo($list);
 	  }
 
 	  // Cache the list items
@@ -290,27 +333,27 @@
 
 	  // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
 	  $styledSelect.click(function(e) {
-		e.stopPropagation();
-		$('div.styledSelect.active').each(function() {
-		  $(this).removeClass('active').next('ul.options').hide();
-		});
-		$(this).toggleClass('active').next('ul.options').toggle();
+	    e.stopPropagation();
+	    $('div.styledSelect.active').each(function() {
+	      $(this).removeClass('active').next('ul.options').hide();
+	    });
+	    $(this).toggleClass('active').next('ul.options').toggle();
 	  });
 
 	  // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
 	  // Updates the select element to have the value of the equivalent option
 	  $listItems.click(function(e) {
-		e.stopPropagation();
-		$styledSelect.text($(this).text()).removeClass('active');
-		$this.val($(this).attr('rel'));
-		$list.hide();
-		/* alert($this.val()); Uncomment this for demonstration! */
+	    e.stopPropagation();
+	    $styledSelect.text($(this).text()).removeClass('active');
+	    $this.val($(this).attr('rel'));
+	    $list.hide();
+	    /* alert($this.val()); Uncomment this for demonstration! */
 	  });
 
 	  // Hides the unordered list when clicking outside of it
 	  $(document).click(function() {
-		$styledSelect.removeClass('active');
-		$list.hide();
+	    $styledSelect.removeClass('active');
+	    $list.hide();
 	  });
 
 	});
@@ -320,13 +363,22 @@
 
 	// add event listener to the file input
 	fileInputElement.addEventListener('change', (event) => {
-		const fileInputElement = event.target;
+	  const fileInputElement = event.target;
 	  let fileInputElementValue = fileInputElement.value;
-	  
+
 	  textInputElement.value = fileInputElementValue;
 	});
-	$(function () {
-    $('[data-toggle="tooltip"]').tooltip();
+	$(function() {
+	  $('[data-toggle="tooltip"]').tooltip();
+	});
+
+	$(document).ready(function() {
+	  $('#trigger').click(function() {
+	    $('#overlay').fadeIn(300);
+	  });
+	  $('#close').click(function() {
+	    $('#overlay').fadeOut(300);
+	  });
 	});
 
 </script>
