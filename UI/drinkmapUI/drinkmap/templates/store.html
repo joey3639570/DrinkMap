@@ -10,6 +10,10 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<!-- Magnific Popup core CSS file -->
+	<link rel="stylesheet" href="magnific-popup/magnific-popup.css">
+	<!-- Magnific Popup core JS file -->
+	<script src="magnific-popup/jquery.magnific-popup.js"></script>
   </head>
   <style>
 	body {
@@ -126,35 +130,13 @@
 	}
 	
 	/* Pop up Form */
-	#overlay {
-	  position: fixed;
-	  height: 100%;
-	  width: 100%;
-	  top: 0;
-	  right: 0;
-	  bottom: 0;
-	  left: 0;
-	  background: rgba(0,0,0,0.8);
-	  display: none;
-	}
-
-	#popup {
-	  max-width: 600px;
-	  width: 80%;
-	  max-height: 300px;
-	  height: 80%;
-	  padding: 20px;
+	.#pop {
 	  position: relative;
-	  background: #fff;
+	  background: #FFF;
+	  padding: 20px;
+	  width: auto;
+	  max-width: 500px;
 	  margin: 20px auto;
-	}
-
-	#close {
-	  position: absolute;
-	  top: 10px;
-	  right: 10px;
-	  cursor: pointer;
-	  color: #000;
 	}
   </style>
   <body>
@@ -206,9 +188,6 @@
 				<td>{{i.cost}}</td>
 				<td>
 				<ul class="list-inline m-0">
-				  <li class="list-inline-item">
-                    <button class="btn btn-success btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Edit"><i class="fa fa-edit " ></i></button>
-                  </li>
                   <li class="list-inline-item">
                     <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
                   </li>
@@ -221,7 +200,47 @@
 			</tbody>
 		  </table>
 		  {% if d %}
-		    <b>增加飲料：  </b><button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Add"><i class="fa fa-plus-square"></i></button>
+		    <b>增加飲料：  </b><button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="modal" data-target="#adddrink" data-placement="top" title="Add"><i class="fa fa-plus-square"></i></button>
+			<!-- Modal -->
+			<div class="modal fade bd-example-modal-lg" id="adddrink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+			  <div class="modal-dialog" role="document">
+				<div class="modal-content">
+				  <div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">新增飲料</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					  <span aria-hidden="true">&times;</span>
+					</button>
+				  </div>
+				  <div class="modal-body">
+					  <form id="new_drink" name="new_drink" action="" method="post">
+					  {% csrf_token %} 
+					  <table border="1">
+						  <tr>
+							<th>飲料品名</th>
+							<td><input type="text" name="drinkname" placeholder="飲料品名" /></td>
+						  </tr>
+						  <tr>
+							<th>飲料類別</th>
+							<td><input type="text" name="drinktype" placeholder="飲料類別" /></td>
+						  </tr>
+						  <tr>
+							<th>價格</th>
+							<td><input type="text" name="cost" placeholder="價格" /></td>
+						  </tr>
+						</table>
+						<br>
+						<div class="center">
+						  <input type="submit" value="搜尋" />
+						</div>
+					  </form>
+				  </div>
+				  <div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+					<button type="button" class="btn btn-primary">輸入飲料</button>
+				  </div>
+				</div>
+			  </div>
+			</div>
 		  {% endif %}
 	  </div>
 	  <div>
@@ -229,156 +248,72 @@
 	<h2>
 		新店家？
 	  </h2>
-	    <button id="trigger">新增店家</button>
-		<div id="overlay">
-		  <div id="popup">
-			<div id="close">X</div>
-			  <form id="new_drink" name="new_drink" action="" method="post">
-			  {% csrf_token %} 
-			  <table border="1">
-				  <tr>
-					<th>店家名稱</th>
-					<td><input type="text" name="storename" placeholder="店家名稱" /></td>
-				  </tr>
-				  <tr>
-					<th>營業時間</th>
-					<td><input type="text" name="storetime1" placeholder="00:00" /> ~~ <input type="text" name="storetime2" placeholder="12:00" /></td>
-				  </tr>
-				  <tr>
-					<th>連絡電話</th>
-					<td><input type="text" name="storephone" placeholder="連絡電話" /></td>
-				  </tr>
-				  <tr>
-					<th>店家地址</th>
-					<td><input type="text" name="storeaddress" placeholder="店家地址" /></td>
-				  </tr>
-				</table>
-				<br>
-				<div class="center">
-				  <input type="submit" value="輸入" />
-				</div>
-			  </form>
+		<!-- Button trigger modal -->
+		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		  新增店家
+		</button>
+		<!-- Modal -->
+		<div class="modal fade bd-example-modal-lg" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+			<div class="modal-content">
+			  <div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">新增店家</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				  <span aria-hidden="true">&times;</span>
+				</button>
+			  </div>
+			  <div class="modal-body">
+				  <form id="new_drink" name="new_drink" action="" method="post">
+				  {% csrf_token %} 
+				  <table border="1">
+					  <tr>
+						<th>店家名稱</th>
+						<td><input type="text" name="storename" placeholder="店家名稱" /></td>
+					  </tr>
+					  <tr>
+						<th>營業時間</th>
+						<td><input type="text" name="storetime1" placeholder="00:00" /> ~~ <input type="text" name="storetime2" placeholder="12:00" /></td>
+					  </tr>
+					  <tr>
+						<th>連絡電話</th>
+						<td><input type="text" name="storephone" placeholder="連絡電話" /></td>
+					  </tr>
+					  <tr>
+						<th>店家地址</th>
+						<td><input type="text" name="storeaddress" placeholder="店家地址" /></td>
+					  </tr>
+					</table>
+					<br>
+					<div class="center">
+					  <input type="submit" value="輸入" />
+					</div>
+				  </form>
+			  </div>
+			  <div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+				<button type="button" class="btn btn-primary">輸入店家</button>
+			  </div>
+			</div>
 		  </div>
 		</div>
-	  
-		  <br>
-		  <h2>
-		  <br>修改飲料資料:</br>
-		  </h2>
-		  <form id="new_drink" name="new_drink" action="" method="post">
-		  {% csrf_token %} 
-		  <table border="1">
-			  <tr>
-				<th>飲料品名</th>
-				<td><input type="text" name="drinkname" placeholder="飲料品名" /></td>
-			  </tr>
-			  <tr>
-				<th>飲料類別</th>
-				<td><input type="text" name="drinktype" placeholder="飲料類別" /></td>
-			  </tr>
-			  <tr>
-				<th>價格</th>
-				<td><input type="text" name="cost" placeholder="價格" /></td>
-			  </tr>
-			</table>
-			<br>
-			<div class="center">
-			  <input type="submit" value="搜尋" />
-			</div>
-		  </form>
-	  </div>
 	</div>
+	
 
   </body>
 
 </html>
 <script>
-// Iterate over each select element
-	$('select').each(function() {
 
-	  // Cache the number of options
-	  var $this = $(this),
-	    numberOfOptions = $(this).children('option').length;
-
-	  // Hides the select element
-	  $this.addClass('s-hidden');
-
-	  // Wrap the select element in a div
-	  $this.wrap('<div class="select"></div>');
-
-	  // Insert a styled div to sit over the top of the hidden select element
-	  $this.after('<div class="styledSelect"></div>');
-
-	  // Cache the styled div
-	  var $styledSelect = $this.next('div.styledSelect');
-
-	  // Show the first select option in the styled div
-	  $styledSelect.text($this.children('option').eq(0).text());
-
-	  // Insert an unordered list after the styled div and also cache the list
-	  var $list = $('<ul />', {
-	    'class': 'options'
-	  }).insertAfter($styledSelect);
-
-	  // Insert a list item into the unordered list for each select option
-	  for (var i = 0; i < numberOfOptions; i++) {
-	    $('<li />', {
-	      text: $this.children('option').eq(i).text(),
-	      rel: $this.children('option').eq(i).val()
-	    }).appendTo($list);
-	  }
-
-	  // Cache the list items
-	  var $listItems = $list.children('li');
-
-	  // Show the unordered list when the styled div is clicked (also hides it if the div is clicked again)
-	  $styledSelect.click(function(e) {
-	    e.stopPropagation();
-	    $('div.styledSelect.active').each(function() {
-	      $(this).removeClass('active').next('ul.options').hide();
-	    });
-	    $(this).toggleClass('active').next('ul.options').toggle();
-	  });
-
-	  // Hides the unordered list when a list item is clicked and updates the styled div to show the selected list item
-	  // Updates the select element to have the value of the equivalent option
-	  $listItems.click(function(e) {
-	    e.stopPropagation();
-	    $styledSelect.text($(this).text()).removeClass('active');
-	    $this.val($(this).attr('rel'));
-	    $list.hide();
-	    /* alert($this.val()); Uncomment this for demonstration! */
-	  });
-
-	  // Hides the unordered list when clicking outside of it
-	  $(document).click(function() {
-	    $styledSelect.removeClass('active');
-	    $list.hide();
-	  });
-
-	});
-
-	const fileInputElement = document.querySelector('.ux-js-a-file-upload__input-file');
-	const textInputElement = document.querySelector('.ux-js-a-file-upload__input-text');
-
-	// add event listener to the file input
-	fileInputElement.addEventListener('change', (event) => {
-	  const fileInputElement = event.target;
-	  let fileInputElementValue = fileInputElement.value;
-
-	  textInputElement.value = fileInputElementValue;
-	});
 	$(function() {
 	  $('[data-toggle="tooltip"]').tooltip();
 	});
-
 	$(document).ready(function() {
-	  $('#trigger').click(function() {
-	    $('#overlay').fadeIn(300);
-	  });
-	  $('#close').click(function() {
-	    $('#overlay').fadeOut(300);
-	  });
+		$('#btn').magnificPopup({
+		  type: 'inline', 
+		  closeBtnInside: true,
+		  closeOnBgClick: false 
+		});
 	});
+	
 
 </script>
