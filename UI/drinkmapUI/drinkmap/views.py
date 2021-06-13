@@ -21,30 +21,47 @@ def store(request):
     store_list = dummy_store_list()
     sm = sqlMain.SQLMain()
     context['store_list']=sm.GetShopList()
-    
+    global_store_id = 0
+    context['drinktype_list'] = sm.GetDrinkList()
     if request.method == 'POST':
+        context['request'] = request.POST
         if 'select_store' in request.POST:
             store_number = request.POST.get('select_store')
-            print(store_number)
+            context['store_number'] = int(store_number[0])
             df = sm.GetDrink(int(store_number[0]))
             # parsing the DataFrame in json format.
             json_records = df.to_json(orient ='records')
             data = []
             data = json.loads(json_records)
             context['d'] = data
-            
-        elif 'drinkname' in request.POST:
-            drink_name = request.POST.get('drinkname')
-            drink_type = request.POST.get('drinktype')
+        
+        elif 'd_drinkname' in request.POST:
+            store_id = request.POST.get('storeid')
+            drink_name = request.POST.get('d_drinkname')
+            drink_type = request.POST.get('drinkclass')
             drink_price = request.POST.get('cost')
-            input_dict = {'drinkname':drink_name, 'drinktype':drink_type ,'cost':drink_price}
-            df = dummy_drink_revise(input_dict)
-            #print(df)
+            input_dict = {'storeid':store_id, 'drinkname':drink_name, 'drinkclass':drink_type ,'cost':drink_price}
+            sm.DeleteDrink(input_dict)
+            df = sm.GetDrink(store_id)
             # parsing the DataFrame in json format.
             json_records = df.to_json(orient ='records')
             data = []
             data = json.loads(json_records)
-            context_revise_drink = {'r': data}
+            context['d'] = data
+        
+        elif 'drinkname' in request.POST:
+            store_id = request.POST.get('storeid')
+            drink_name = request.POST.get('drinkname')
+            drink_type = request.POST.get('drinkclass')
+            drink_price = request.POST.get('cost')
+            input_dict = {'storeid':store_id, 'drinkname':drink_name, 'drinkclass':drink_type ,'cost':drink_price}
+            sm.AddDrink(input_dict)
+            df = sm.GetDrink(store_id)
+            # parsing the DataFrame in json format.
+            json_records = df.to_json(orient ='records')
+            data = []
+            data = json.loads(json_records)
+            context['d'] = data
             
         elif 'storename' in request.POST:
             store_name = request.POST.get('storename')

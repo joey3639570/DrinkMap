@@ -189,7 +189,50 @@
 				<td>
 				<ul class="list-inline m-0">
                   <li class="list-inline-item">
-                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="tooltip" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+                    <button class="btn btn-danger btn-sm rounded-0" type="button" data-toggle="modal" data-target="#deletedrink" data-placement="top" title="Delete"><i class="fa fa-trash"></i></button>
+					<!-- Modal -->
+					<div class="modal fade bd-example-modal-lg" id="deletedrink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+					  <div class="modal-dialog" role="document">
+						<div class="modal-content">
+						  <div class="modal-header">
+							<h5 class="modal-title" id="exampleModalLabel">確認刪除飲料?</h5>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							  <span aria-hidden="true">&times;</span>
+							</button>
+						  </div>
+						  <div class="modal-body">
+							  <form id="new_drink" name="new_drink" action="" method="post">
+							  {% csrf_token %} 
+							  <table border="1">
+								  <tr>
+									<th>商店編號</th>
+									<td><input type="text" name="storeid" value="{{store_number}}" readonly/></td>
+								  </tr>
+								  <tr>
+									<th>飲料品名</th>
+									<td><input type="text" name="d_drinkname" value="{{i.drinkname}}" readonly/></td>
+								  </tr>
+								  <tr>
+									<th>飲料類別</th>
+									<td><input type="text" name="drinkclass" value="{{i.classname}}" readonly/></td>
+								  </tr>
+								  <tr>
+									<th>價格</th>
+									<td><input type="text" name="cost" value="{{i.cost}}" readonly/></td>
+								  </tr>
+								</table>
+								<br>
+								<div class="center">
+								  <input type="submit" value="確認" />
+								</div>
+							  </form>
+						  </div>
+						  <div class="modal-footer">
+							<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
+						  </div>
+						</div>
+					  </div>
+					</div>
                   </li>
 				</ul>
 				</td>
@@ -199,7 +242,7 @@
 			{% endif %}
 			</tbody>
 		  </table>
-		  {% if d %}
+		  {% if store_number %}
 		    <b>增加飲料：  </b><button class="btn btn-primary btn-sm rounded-0" type="button" data-toggle="modal" data-target="#adddrink" data-placement="top" title="Add"><i class="fa fa-plus-square"></i></button>
 			<!-- Modal -->
 			<div class="modal fade bd-example-modal-lg" id="adddrink" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -216,12 +259,23 @@
 					  {% csrf_token %} 
 					  <table border="1">
 						  <tr>
+							<th>商店編號</th>
+							<td><input type="text" name="storeid" value="{{store_number}}" readonly/></td>
+						  </tr>
+						  <tr>
 							<th>飲料品名</th>
 							<td><input type="text" name="drinkname" placeholder="飲料品名" /></td>
 						  </tr>
 						  <tr>
 							<th>飲料類別</th>
-							<td><input type="text" name="drinktype" placeholder="飲料類別" /></td>
+							<td>
+								<select id="selectbox1" name="drinkclass">
+								  <option value="n">選擇你要的飲料類別&hellip;</option>
+								  {% for drinktype in drinktype_list %}
+									  <option value="{{ drinktype }}">{{ drinktype }}</option>
+								  {% endfor %}
+								</select>
+							</td>
 						  </tr>
 						  <tr>
 							<th>價格</th>
@@ -230,13 +284,12 @@
 						</table>
 						<br>
 						<div class="center">
-						  <input type="submit" value="搜尋" />
+						  <input type="submit" value="輸入" />
 						</div>
 					  </form>
 				  </div>
 				  <div class="modal-footer">
 					<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-					<button type="button" class="btn btn-primary">輸入飲料</button>
 				  </div>
 				</div>
 			  </div>
@@ -291,7 +344,6 @@
 			  </div>
 			  <div class="modal-footer">
 				<button type="button" class="btn btn-secondary" data-dismiss="modal">關閉</button>
-				<button type="button" class="btn btn-primary">輸入店家</button>
 			  </div>
 			</div>
 		  </div>
