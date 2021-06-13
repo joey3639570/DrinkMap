@@ -14,7 +14,7 @@ class SQLMain:
     
     def AddShop(self, value, 
                 output = lambda x:print(x), 
-                confirm_callback = lambda:input('Confirm Input? (y/n)\n')):
+                confirm_callback = lambda:"y" == input('Confirm Input? (y/n)\n')):
         """
         輸入 dictionary 
         key是
@@ -24,7 +24,6 @@ class SQLMain:
         以此插入資料庫內
         並且以資料庫的編號順序排下去
         """
-        
         sql = f"""INSERT INTO Shop(ShopName,Time,Tel,Address) VALUES ('{value["storename"]}','{value["storetime1"]}-{value["storetime2"]}','{value["storephone"]}','{value["storeaddress"]}');
         """
         self.s.SQL(sql)
@@ -32,6 +31,43 @@ class SQLMain:
         sql = """
         SELECT *
         FROM Shop;
+        """
+        output(f"\nSQL:{sql}")
+        df = pd.read_sql_query(sql, self.s.con)
+        
+        output(f'Result Will Be:\n{df}')
+        
+        ensure = ""
+        while not ensure in ["y","n"]:
+            ensure = confirm_callback()
+            if ensure:
+                self.s.Commit()
+                df = pd.read_sql_query(sql, self.s.con)
+                output(f'Result:\n{df}')
+            else:
+                self.s.Abort()
+                df = pd.read_sql_query(sql, self.s.con)
+                output(f'Result:\n{df}')
+                
+        return df
+    
+    def AddDrink(self, value, 
+                output = lambda x:print(x), 
+                confirm_callback = lambda:input('Confirm Input? (y/n)\n')):
+        """
+        - 插入新飲料
+        輸入dictionary
+        key為 storeid drinkname drinkclass cost
+        """
+        
+        # INSERT INTO Drink VALUES (1,'就是拉茶','A0003',50)
+        sql = f"""INSERT INTO Drink VALUES ('{value["storeid"]}','{value["drinkname"]}','{value["drinkclass"]}','{value["cost"]}');
+        """
+        self.s.SQL(sql)
+        
+        sql = """
+        SELECT *
+        FROM Drink;
         """
         output(f"\nSQL:{sql}")
         df = pd.read_sql_query(sql, self.s.con)
@@ -49,9 +85,53 @@ class SQLMain:
                 self.s.Abort()
                 df = pd.read_sql_query(sql, self.s.con)
                 output(f'Result:\n{df}')
+            else:
+                output("invalid input in confirm.")
                 
         return df
+        
+    def DeleteDrink(self, value, 
+                output = lambda x:print(x), 
+                confirm_callback = lambda:input('Confirm Input? (y/n)\n')):
+        """
+        - 刪除飲料
+        input dictionary
+        key 為 storeid drinkname
+        """
+        sql = f"""
+        DELETE 
+        FROM Drink
+        WHERE shopid = '{value["storeid"]}' and drinkname = '{value["drinkname"]}';
+        """
+        self.s.SQL(sql)
+        
+        sql = """
+        SELECT *
+        FROM Drink;
+        """
+        output(f"\nSQL:{sql}")
+        df = pd.read_sql_query(sql, self.s.con)
+        
+        output(f'Result Will Be:\n{df}')
+        
+        ensure = ""
+        while not ensure in ["y","n"]:
+            ensure = confirm_callback()
+            if ensure == "y":
+                self.s.Commit()
+                df = pd.read_sql_query(sql, self.s.con)
+                output(f'Result:\n{df}')
+            elif ensure == "n":
+                self.s.Abort()
+                df = pd.read_sql_query(sql, self.s.con)
+                output(f'Result:\n{df}')
+            else:
+                output("invalid input in confirm.")
+                
+        return df
+        
     
+    #region Get 
     def GetShopList(self,
                     output = lambda x:print(x)):
         sql = """
@@ -127,8 +207,9 @@ class SQLMain:
         ret = [t[0] for t in df.values.tolist()]
         output(ret)
         return ret
-
+    #endregion
     
+    #region Set Query Value
     def SetPriceRange(self, Min = 0, Max = 999):
         if Min != None and Min != '':
             self.Min = Min 
@@ -140,7 +221,8 @@ class SQLMain:
     
     def SetShop(self, Shop = None):
         self.Shop = Shop
-        
+    #endregion
+    
     def Query(self, key=dict, output = lambda x:print(x)):
         """
         key 有 主特徵 次特徵 價格下限 價格上限 店家 
@@ -159,12 +241,12 @@ class SQLMain:
         #endregion
         
         sql = f"""
-select ShopName, DrinkName, Cost
-from (DrinkClass NATURAL JOIN Drink) NATURAL JOIN Shop
-where Cost > {self.Min} AND Cost < {self.Max}
-{f'AND ClassName = "{self.className}"' if self.className != None else ""}
-{f'AND DrinkName like "%{self.drinkName}%"' if self.drinkName != None else ""}
-{f'AND ShopName = "{self.Shop}"' if self.Shop != None else ""}
+        select ShopName, DrinkName, Cost
+        from (DrinkClass NATURAL JOIN Drink) NATURAL JOIN Shop
+        where Cost > {self.Min} AND Cost < {self.Max}
+        {f'AND ClassName = "{self.className}"' if self.className != None else ""}
+        {f'AND DrinkName like "%{self.drinkName}%"' if self.drinkName != None else ""}
+        {f'AND ShopName = "{self.Shop}"' if self.Shop != None else ""}
         """
         output(f"\nSQL:{sql}")
         #result = self.s.SQL(sql)
@@ -175,6 +257,7 @@ where Cost > {self.Min} AND Cost < {self.Max}
 if __name__ == "__main__":
     sm = SQLMain()
     
+    """
     key = {}
     key['select1'] = '水果茶'
     key['select2'] = '檸檬'
@@ -183,7 +266,7 @@ if __name__ == "__main__":
     key['price_low'] = None
     key['price_high'] = None
     df = sm.Query(key)
-    
+    """
     
     """
     key = {'storename':"test",'storetime1':"08:00",'storetime2':"10:00",'storephone':"0123456789","storeaddress":"home"}
@@ -200,5 +283,17 @@ if __name__ == "__main__":
     
     # sm.GetItemList() # ['珍珠', '仙草凍', '蘆薈', '脆纖果', '愛玉', '白玉珍珠', '椰果', '羅勒子', '黑糖珍珠', '燕麥', 'QQ', '荔枝QQ', '寒天', '紅豆', '小紫蘇', '統一布丁', '養樂多', '密鳳梨', '咖啡凍', '波霸', '雙Q果', '蜂蜜', '布丁']
     
-    print(sm.GetShopListByItem('珍珠')) # ['鮮茶道', '大苑子']
+    # print(sm.GetShopListByItem('珍珠')) # ['鮮茶道', '大苑子']
+    
+    
+    key = {'storeid':"5",'drinkname':"test",'drinkclass':"A0001",'cost':"50"}
+    df = sm.AddDrink(key, 
+                    output = lambda x:print(x), 
+                    confirm_callback= lambda:input('Confirm Input? (y/n)\n'))
+    
+    
+    key = {'storeid':"5",'drinkname':"test"}
+    df = sm.DeleteDrink(key, 
+                    output = lambda x:print(x), 
+                    confirm_callback= lambda:input('Confirm Input? (y/n)\n'))
     
