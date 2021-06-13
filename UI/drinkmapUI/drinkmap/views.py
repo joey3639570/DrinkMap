@@ -11,6 +11,9 @@ sys.path.append('SQL')
 import sqlMain
 # Create your views here.
 
+def validation():
+    return "y"
+
 def index(request):
     return render(request, 'homepage.html')
 
@@ -41,13 +44,14 @@ def store(request):
             drink_type = request.POST.get('drinkclass')
             drink_price = request.POST.get('cost')
             input_dict = {'storeid':store_id, 'drinkname':drink_name, 'drinkclass':drink_type ,'cost':drink_price}
-            sm.DeleteDrink(input_dict)
+            sm.DeleteDrink(input_dict, confirm_callback = lambda:validation())
             df = sm.GetDrink(store_id)
             # parsing the DataFrame in json format.
             json_records = df.to_json(orient ='records')
             data = []
             data = json.loads(json_records)
             context['d'] = data
+            context['store_number'] = store_id
         
         elif 'drinkname' in request.POST:
             store_id = request.POST.get('storeid')
@@ -55,13 +59,14 @@ def store(request):
             drink_type = request.POST.get('drinkclass')
             drink_price = request.POST.get('cost')
             input_dict = {'storeid':store_id, 'drinkname':drink_name, 'drinkclass':drink_type ,'cost':drink_price}
-            sm.AddDrink(input_dict)
+            sm.AddDrink(input_dict, confirm_callback = lambda:validation())
             df = sm.GetDrink(store_id)
             # parsing the DataFrame in json format.
             json_records = df.to_json(orient ='records')
             data = []
             data = json.loads(json_records)
             context['d'] = data
+            context['store_number'] = store_id
             
         elif 'storename' in request.POST:
             store_name = request.POST.get('storename')
@@ -74,7 +79,7 @@ def store(request):
             store_address = request.POST.get('storeaddress')
             input_dict = {'storename':store_name, 'storetime1':store_time1 ,
                             'storetime2':store_time2, 'storephone':store_phone, 'storeaddress':store_address}
-            df = sm.AddShop(input_dict)
+            df = sm.AddShop(input_dict, confirm_callback = lambda:validation())
         
         context.update(context_revise_drink)
     return render(request, 'store.html', context)
