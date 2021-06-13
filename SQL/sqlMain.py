@@ -59,9 +59,16 @@ class SQLMain:
         輸入dictionary
         key為 storeid drinkname drinkclass cost
         """
+        sql = f"""
+        SELECT classid
+        FROM DrinkClass
+        WHERE classname = '{value["drinkclass"]}';"""
         
-        # INSERT INTO Drink VALUES (1,'就是拉茶','A0003',50)
-        sql = f"""INSERT INTO Drink VALUES ('{value["storeid"]}','{value["drinkname"]}','{value["drinkclass"]}','{value["cost"]}');
+        str_id = pd.read_sql_query(sql, self.s.con).values.tolist()[0][0]
+        
+        # INSERT INTO Drink VALUES (1,'就是拉茶','高山茶',50)
+        sql = f"""
+        INSERT INTO Drink VALUES ('{value["storeid"]}','{value["drinkname"]}','{str_id}','{value["cost"]}');
         """
         self.s.SQL(sql)
         
@@ -286,7 +293,7 @@ if __name__ == "__main__":
     # print(sm.GetShopListByItem('珍珠')) # ['鮮茶道', '大苑子']
     
     
-    key = {'storeid':"5",'drinkname':"test",'drinkclass':"A0001",'cost':"50"}
+    key = {'storeid':"5",'drinkname':"test",'drinkclass':"高山茶",'cost':"50"}
     df = sm.AddDrink(key, 
                     output = lambda x:print(x), 
                     confirm_callback= lambda:input('Confirm Input? (y/n)\n'))
