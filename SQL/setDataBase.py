@@ -12,11 +12,11 @@ CREATE TABLE Shop(
   ,Tel      VARCHAR(10)
   ,Address  VARCHAR(14)
 );""","""
-INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('拉CHA茶',1,NULL,NULL,NULL);""","""
-INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('Mr.WISH',2,'10:30-22:30','06-2088832','台南市東區育樂街52號');""","""
-INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('麻古茶坊',3,'08:00-22:00','06-2002221','台南市東區大學路西段1號');""","""
-INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('鮮茶道',4,'09:20-22:30','06-2388877','台南市東區育樂街156-2號');""","""
-INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('大苑子',5,'10:00-22:30','06-2082238','台南市東區勝利路149號');
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]拉CHA茶',1,NULL,NULL,NULL);""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]Mr.WISH',2,'10:30-22:30','06-2088832','台南市東區育樂街52號');""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]麻古茶坊',3,'08:00-22:00','06-2002221','台南市東區大學路西段1號');""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]鮮茶道',4,'09:20-22:30','06-2388877','台南市東區育樂街156-2號');""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]大苑子',5,'10:00-22:30','06-2082238','台南市東區勝利路149號');
 """, """
 drop table if exists DrinkClass;
 """, """CREATE TABLE DrinkClass (
