@@ -151,7 +151,7 @@ class SQLMain:
         
         l = list(zip(*df.values.tolist()))
         
-        return list(zip(l[0], l[1]))
+        return list(zip(l[0],l[1]))
     
     def GetShopListByItem(self, ItemName,
                     output = lambda x:print(x)):
@@ -248,7 +248,7 @@ class SQLMain:
         #endregion
         
         sql = f"""
-        select ShopName, DrinkName, Cost
+        select ShopName, DrinkName, Cost ,Tel ,Address
         from (DrinkClass NATURAL JOIN Drink) NATURAL JOIN Shop
         where Cost > {self.Min} AND Cost < {self.Max}
         {f'AND ClassName = "{self.className}"' if self.className != None else ""}
@@ -264,7 +264,7 @@ class SQLMain:
 if __name__ == "__main__":
     sm = SQLMain()
     
-    """
+    
     key = {}
     key['select1'] = '水果茶'
     key['select2'] = '檸檬'
@@ -273,7 +273,7 @@ if __name__ == "__main__":
     key['price_low'] = None
     key['price_high'] = None
     df = sm.Query(key)
-    """
+    
     
     """
     key = {'storename':"test",'storetime1':"08:00",'storetime2':"10:00",'storephone':"0123456789","storeaddress":"home"}
@@ -281,10 +281,10 @@ if __name__ == "__main__":
                     output = lambda x:print(x), 
                     confirm_callback= lambda:input('Confirm Input? (y/n)\n'))
     """
-                    
+      
     # print(sm.GetShopList(output = lambda x:print(x))) # [('拉CHA茶', 1), ('Mr.WISH', 2), ('麻古茶坊', 3), ('鮮茶道', 4), ('大苑子', 5)]
     
-    #sm.GetDrink(5, output = lambda x:print(x))
+    # sm.GetDrink(5, output = lambda x:print(x))
     
     # sm.GetDrinkList() # ['奶茶', '鮮奶茶', '泰式奶茶', '紅茶', '綠茶', '檸檬茶', '高山茶', '水果茶', '咖啡', '鮮奶', '巧克力', '其它'] 
     
@@ -292,7 +292,7 @@ if __name__ == "__main__":
     
     # print(sm.GetShopListByItem('珍珠')) # ['鮮茶道', '大苑子']
     
-    
+    """
     key = {'storeid':"5",'drinkname':"test",'drinkclass':"高山茶",'cost':"50"}
     df = sm.AddDrink(key, 
                     output = lambda x:print(x), 
@@ -303,4 +303,4 @@ if __name__ == "__main__":
     df = sm.DeleteDrink(key, 
                     output = lambda x:print(x), 
                     confirm_callback= lambda:input('Confirm Input? (y/n)\n'))
-    
+    """
