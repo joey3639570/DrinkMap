@@ -12,7 +12,7 @@ CREATE TABLE Shop(
   ,Tel      VARCHAR(10)
   ,Address  VARCHAR(14)
 );""","""
-INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]拉CHA茶',1,NULL,NULL,NULL);""","""
+INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]拉CHA茶',1,'15:30-21:00','0958870252','台南市東區育樂街63號');""","""
 INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]Mr.WISH',2,'10:30-22:30','06-2088832','台南市東區育樂街52號');""","""
 INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]麻古茶坊',3,'08:00-22:00','06-2002221','台南市東區大學路西段1號');""","""
 INSERT INTO Shop(ShopName,ShopID,Time,Tel,Address) VALUES ('[台南]鮮茶道',4,'09:20-22:30','06-2388877','台南市東區育樂街156-2號');""","""
@@ -320,7 +320,7 @@ INSERT INTO Items(ItemName,ItemID) VALUES ('紅豆','aa014');""","""
 INSERT INTO Items(ItemName,ItemID) VALUES ('小紫蘇','aa015');""","""
 INSERT INTO Items(ItemName,ItemID) VALUES ('統一布丁','aa016');""","""
 INSERT INTO Items(ItemName,ItemID) VALUES ('養樂多','aa017');""","""
-INSERT INTO Items(ItemName,ItemID) VALUES ('密鳳梨','aa018');""","""
+INSERT INTO Items(ItemName,ItemID) VALUES ('蜜鳳梨','aa018');""","""
 INSERT INTO Items(ItemName,ItemID) VALUES ('咖啡凍','aa019');""","""
 INSERT INTO Items(ItemName,ItemID) VALUES ('波霸','aa020');""","""
 INSERT INTO Items(ItemName,ItemID) VALUES ('雙Q果','aa021');""","""
